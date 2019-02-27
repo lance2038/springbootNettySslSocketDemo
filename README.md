@@ -1,5 +1,5 @@
  # socket/sslSocket + Netty/原生socket 整合的Demo,可任意切换
- # CSDN地址:
+ # CSDN地址:https://blog.csdn.net/sinat_30637097/article/details/87971873
 **关于项目中使用的4个证书，使用Java自带的keytool命令，在命令行生成：**
     _1、生成服务器端私钥kserver.keystore文件_
         `keytool -genkey -alias serverkey -validity 1 -keystore kserver.keystore`
