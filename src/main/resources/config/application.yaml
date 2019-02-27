@@ -1,0 +1,22 @@
+# spring config
+spring:
+  profiles:
+    active: dev
+  main:
+    banner-mode: console
+  output:
+    ansi:
+      enabled: detect
+#set response encoding
+  http:
+    encoding:
+      force: true
+# logging config
+logging:
+  register-shutdown-hook: true
+# thread Pool
+executor:
+  corePoolSize: 10
+  maxPoolSize: 200
+  queueCapacity: 10
+  namePrefix: AsyncExecutor-
