@@ -5,7 +5,6 @@ import com.lance.api.business.util.ComposeUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,19 +12,15 @@ import org.springframework.stereotype.Component;
  *
  * @author lance
  */
-@Component
 public class MessageEncoder extends MessageToByteEncoder<ReturnModel>
 {
-    @Autowired
-    private ComposeUtil composeUtil;
-
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, ReturnModel returnModel, ByteBuf out) throws Exception
     {
         byte[] bytes = null;
         try
         {
-            bytes = composeUtil.doCanProcess(returnModel.getMap(), returnModel.getServCode(), returnModel.getMsgId());
+            bytes = ComposeUtil.doCanProcess(returnModel.getMap(), returnModel.getServCode(), returnModel.getMsgId());
         }
         catch (Exception e)
         {

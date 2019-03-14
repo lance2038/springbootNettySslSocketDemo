@@ -28,10 +28,6 @@ import java.util.Map;
 @Component
 public class ComposeUtil
 {
-
-    @Value("${businessConfig.version:1.0.0}")
-    private String version;
-
     private static final byte BLOCK_BGN_SIGN = 0x68;
     private static final byte BLOCK_END_SIGN = 0x16;
     private static final String ENCODING = "UTF-8";
@@ -45,13 +41,13 @@ public class ComposeUtil
      * @return
      * @throws Exception
      */
-    public byte[] doCanProcess(Map paraMap, String serverCode, String msgId) throws Exception
+    public static byte[] doCanProcess(Map paraMap, String serverCode, String msgId) throws Exception
     {
         Map<String, Object> map = new HashMap<>();
         Map<String, String> headMap = new HashMap<>();
         // 服务编码
         String servCode = serverCode;
-        headMap.put("version", version);
+        headMap.put("version", "1.0.0");
         // 服务编码
         headMap.put("servCode", servCode);
 
@@ -88,7 +84,7 @@ public class ComposeUtil
      * @return
      * @throws Exception
      */
-    public EntryModel deSplit(ByteDataBuffer obj) throws Exception
+    public static EntryModel deSplit(ByteDataBuffer obj) throws Exception
     {
         ByteDataBuffer dataBuf = obj;
         dataBuf.setEncoding(ENCODING);
@@ -99,6 +95,7 @@ public class ComposeUtil
         if (sign != BLOCK_BGN_SIGN)
         {
             log.info("无法找到起始标记!");
+            return null;
         }
         totalLen = dataBuf.readInt32();
         dataBuf.readString(6);

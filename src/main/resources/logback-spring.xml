@@ -2,12 +2,12 @@
 <configuration scan="true" scanPeriod="30 seconds" debug="false">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <!-- log files path -->
-    <property name="log.path" value="/logGroup/aliPayDataApi"/>
+    <property name="log.path" value="/logGroup/socketDataApi"/>
     <!-- logfile -->
     <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/info.log</file>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - [%-5p] %-40.40logger{39}: %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}-[%-5p]|%X{logId}| %-40.40logger{39}: %m%n</pattern>
             <charset>utf-8</charset>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -21,7 +21,7 @@
     <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/warn.log</file>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - [%-5p] %-40.40logger{39}: %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}-[%-5p]|%X{logId}| %-40.40logger{39}: %m%n</pattern>
             <charset>utf-8</charset>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -40,7 +40,7 @@
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/error.log</file>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - [%-5p] %-40.40logger{39}: %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}-[%-5p]|%X{logId}| %-40.40logger{39}: %m%n</pattern>
             <charset>utf-8</charset>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">

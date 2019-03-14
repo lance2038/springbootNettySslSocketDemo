@@ -46,16 +46,6 @@ public class NettyServer extends ChannelInitializer
      */
     @Autowired
     private ServerHandler serverHandler;
-    /**
-     * 报文解码器
-     */
-    @Autowired
-    private MessageDecoder messageDecoder;
-    /**
-     * 报文编码器
-     */
-    @Autowired
-    private MessageEncoder messageEncoder;
 
     /**
      * 关闭服务
@@ -119,9 +109,9 @@ public class NettyServer extends ChannelInitializer
                     }
                     ChannelPipeline pipeline = ch.pipeline();
                     // 解码器
-                    pipeline.addLast(messageDecoder);
+                    pipeline.addLast(new MessageDecoder());
                     // 编码器
-                    pipeline.addLast(messageEncoder);
+                    pipeline.addLast(new MessageEncoder());
                     // 业务处理器
                     pipeline.addLast(serverHandler);
 

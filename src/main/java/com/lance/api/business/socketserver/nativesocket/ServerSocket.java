@@ -1,9 +1,6 @@
 package com.lance.api.business.socketserver.nativesocket;
 
 
-import com.lance.api.business.pojo.model.EntryModel;
-import com.lance.api.business.util.ByteDataBuffer;
-import com.lance.api.business.util.ComposeUtil;
 import com.lance.api.business.util.DealSocket;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +13,6 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.TrustManagerFactory;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.security.KeyStore;
 
@@ -43,8 +36,6 @@ public class ServerSocket implements Runnable
 
     @Autowired
     private DealSocket dealSocket;
-    @Autowired
-    private ComposeUtil composeUtil;
 
     private SSLServerSocket serverSocket;
 
@@ -52,7 +43,8 @@ public class ServerSocket implements Runnable
     /**
      * 启动程序
      */
-    public synchronized void start()
+    @Override
+    public void run()
     {
         if (serverSocket == null)
         {
@@ -63,27 +55,9 @@ public class ServerSocket implements Runnable
         {
             try
             {
-                /*
-                1.获取socket数据
-                */
                 Socket socket = serverSocket.accept();
-                InputStream input = socket.getInputStream();
-                OutputStream output = socket.getOutputStream();
-                BufferedInputStream bis = new BufferedInputStream(input);
-                BufferedOutputStream bos = new BufferedOutputStream(output);
-                byte[] buffer = new byte[36000];
-                bis.read(buffer);
 
-                // 解析报文
-                EntryModel entryModel = composeUtil.deSplit(new ByteDataBuffer(buffer));
-                // 业务请求码
-                String servCode = entryModel.getHeadModel().getServCode();
-                // 报文标识
-                String msgId = entryModel.getHeadModel().getMsgId();
-                /*
-                2.业务处理
-                */
-                dealSocket.doBusiness(servCode, msgId, entryModel, bos);
+                dealSocket.analysisAndDealMsg(socket);
             }
             catch (Exception e)
             {
@@ -123,11 +97,5 @@ public class ServerSocket implements Runnable
         {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void run()
-    {
-        start();
     }
 }

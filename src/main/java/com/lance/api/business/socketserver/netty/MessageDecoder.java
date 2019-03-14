@@ -4,6 +4,7 @@ import com.lance.api.business.pojo.model.EntryModel;
 import com.lance.api.business.util.ByteDataBuffer;
 import com.lance.api.business.util.ComposeUtil;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,8 @@ import java.util.List;
  *
  * @author lance
  */
-@Component
 public class MessageDecoder extends ByteToMessageDecoder
 {
-    @Autowired
-    private ComposeUtil composeUtil;
 
     /**
      * 从ByteBuf中获取字节，转换成对象
@@ -39,7 +37,7 @@ public class MessageDecoder extends ByteToMessageDecoder
 
         ByteDataBuffer dataBuffer = new ByteDataBuffer(req);
 
-        EntryModel entryModel = composeUtil.deSplit(dataBuffer);
+        EntryModel entryModel = ComposeUtil.deSplit(dataBuffer);
         out.add(entryModel);
         buffer.skipBytes(len);
     }

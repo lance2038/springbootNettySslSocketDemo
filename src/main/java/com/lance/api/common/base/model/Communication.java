@@ -8,21 +8,21 @@ import java.util.Map;
 
 public class Communication
 {
-    private static Communication alipayCommunication = null;
+    private static Communication communication = null;
 
     public static Communication getInstance()
     {
-        if (alipayCommunication == null)
+        if (communication == null)
         {
-            alipayCommunication = new Communication();
+            communication = new Communication();
         }
-        return alipayCommunication;
+        return communication;
     }
 
 
     public Map<String, Object> getSuccessMap()
     {
-        Map<String, Object> res = new HashMap<>();
+        Map<String, Object> res = new HashMap<>(3);
         res.put("rtnCode", ResponseCode._9999.getKey());
         res.put("rtnMsg", ResponseCode._9999.getValue());
         res.put("extend", "");
@@ -31,7 +31,7 @@ public class Communication
 
     public Map<String, Object> getErroMap()
     {
-        Map<String, Object> res = new HashMap<>();
+        Map<String, Object> res = new HashMap<>(3);
         res.put("rtnCode", ResponseCode._0009.getKey());
         res.put("rtnMsg", ResponseCode._0009.getValue());
         res.put("extend", "");
@@ -41,7 +41,7 @@ public class Communication
 
     public Map<String, Object> getFailedMap(String rtnCode, String rtnMsg)
     {
-        Map<String, Object> res = new HashMap<>();
+        Map<String, Object> res = new HashMap<>(3);
         res.put("rtnCode", rtnCode);
         res.put("rtnMsg", rtnMsg);
         res.put("extend", "");
@@ -51,7 +51,7 @@ public class Communication
 
     public Map<String, Object> getFailedMap(String rtnCode, String rtnMsg, String extend)
     {
-        Map<String, Object> res = new HashMap<>();
+        Map<String, Object> res = new HashMap<>(3);
         res.put("rtnCode", rtnCode);
         res.put("rtnMsg", rtnMsg);
         res.put("extend", extend);
